@@ -1,0 +1,85 @@
+<?php 
+    include 'db.php'
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+
+<body>
+    <!--===== HEADER =====-->
+    <header>
+        <div class="container">
+            <h1><a href="index.php">Himang</a></h1>
+            <ul>
+                <li><a href="produk.php">Produk</a></li>
+            </ul>
+        </div>
+    </header>
+    <!--===== SEARCH =====-->
+    <div class="search">
+        <div class="container">
+            <form action="produk.php">
+                <input type="text" name="search" placeholder="Cari Produk">
+                <input type="submit" name="Cari" value="Cari">
+                </from>
+        </div>
+    </div>
+    <!--===== KATEGORI =====-->
+    <div class="section">
+        <div class="container">
+            <h3>Kategori</h3>
+            <div class="box">
+                <?php
+            $kategori = mysqli_query($conn, "SELECT * FROM tb_kategori ORDER BY kategori_id DESC");
+            if(mysqli_num_rows($kategori) > 0 ){
+                while($k = mysqli_fetch_array($kategori)){
+                                        ?>
+                    <a href="produk.php?ka=<?php echo $k['kategori_id'] ?>">
+                        <div class="col-5">
+                            <img src="gbr/kategori.png" width="50px" style="margin-bottom: 5px" ;>
+                            <p>
+                                <?php echo $k['kategori_nama'] ?>
+                            </p>
+                        </div>
+                    </a>
+                    <?php }} else{ ?>
+                    <p>Kategori Tidak Ada</p>
+                    <?php } ?>
+            </div>
+        </div>
+
+    </div>
+    <!--===== KATEGORI =====-->
+    <div class="section">
+        <div class="container">
+            <h3>Produk Terbaru</h3>
+            <div class="box">
+                <?php 
+                $produk = mysqli_query($conn, "SELECT * FROM tb_produk ORDER BY produk_id DESC LIMIT 6");
+                if(mysqli_num_rows($produk) > 0){
+
+            ?>
+                <div class="col-3">
+                    <img src="">
+                    <p class="Nama">Nama Produk</p>
+                    <p class="harga">Rp. 500.000</p>
+                </div>
+                <?php }else{ ?>
+                <p>Produk Tidak Ada</p>
+
+                <?php } ?>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
